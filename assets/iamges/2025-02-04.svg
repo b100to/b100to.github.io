@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <!-- 배경 -->
+  <rect width="800" height="400" fill="#000000"/>
+  
+  <!-- 제목 첫 줄 -->
+  <text x="70" y="130" font-family="Arial" font-size="49" fill="#FFFFFF" font-weight="bold">Terramate로 IaC 관리하기</text>
+  
+  <!-- 제목 두번째 줄 -->
+  <text x="400" y="190" font-family="Arial" font-size="40" fill="#194f9a" font-weight="bold">심플함의 미학</text>
+  
+  <!-- 밑줄 -->
+  <line x1="70" y1="300" x2="730" y2="300" stroke="#173d7a" stroke-width="4"/>
+  
+  <!-- 작성자 -->
+  <text x="690" y="340" font-family="Arial" font-size="13" fill="#FFFFFF" text-anchor="end">by Jonghwa Baek</text>
+</svg>
