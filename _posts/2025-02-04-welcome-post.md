@@ -1,7 +1,7 @@
 ---
 title: "Terramate로 IaC 관리하기: 심플함의 미학"
-author: Jonghwa Baek
 date: 2025-02-04 16:31:25 +0900
+description: "Terramate로 IaC 관리하기: 심플함의 미학"
 categories: [Terraform]
 tags: [IaC, Terramate, AWS, DevOps, Terraform, Terragrunt]
 image: /assets/iamges/2025-02-04.svg
