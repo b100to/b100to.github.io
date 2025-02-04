@@ -4,7 +4,7 @@ date: 2025-02-04 16:31:25 +0900
 description: "Terramate로 IaC 관리하기: 심플함의 미학"
 categories: [Terraform]
 tags: [IaC, Terramate, AWS, DevOps, Terraform, Terragrunt]
-image: /assets/iamges/2025-02-04.svg
+image: /assets/img/2025-02-04.svg
 ---
 
 안녕하세요! 오늘은 제가 최근에 발견한 꿀툴을 하나 소개해드리려고 합니다. 바로 Terramate입니다. 
