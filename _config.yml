@@ -218,3 +218,6 @@ jekyll-archives:
     category: /categories/:name/
 
 future: true
+
+plugins:
+  - jekyll-sitemap
