@@ -222,4 +222,4 @@ future: true
 plugins:
   - jekyll-sitemap
 
-google_site_verification: <meta name="google-site-verification" content="6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM" />
+google_site_verification: 6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM
