@@ -20,7 +20,7 @@ tagline: DevOps Engineer # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   DevOps Engineer at Fitpet
-  
+
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://b100to.github.io"
@@ -221,3 +221,5 @@ future: true
 
 plugins:
   - jekyll-sitemap
+
+google_site_verification: <meta name="google-site-verification" content="6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM" />
