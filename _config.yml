@@ -39,7 +39,7 @@ social:
 
 # Site Verification Settings
 webmaster_verifications:
-  google: # fill in your Google verification code
+  google: 6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM
   bing: # fill in your Bing verification code
   alexa: # fill in your Alexa verification code
   yandex: # fill in your Yandex verification code
@@ -221,5 +221,3 @@ future: true
 
 plugins:
   - jekyll-sitemap
-
-google_site_verification: 6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM
