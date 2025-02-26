@@ -1,10 +1,11 @@
+---
 title: "ArgoCD에서 Nginx Helm 차트 멀티소스 배포하기"
 date: 2025-02-26 19:27:00 +0900
 description: "ArgoCD에서 Nginx Helm 차트 멀티소스 배포하기"
 categories: [ArgoCD, GitOps]
 tags: [ArgoCD, Helm, GitOps, Kubernetes, 멀티소스배포]
-image: /assets/img/2025-02-04.svg
-
+image: /assets/img/2025-02-26.svg
+---
 # ArgoCD에서 Nginx Helm 차트 멀티소스 배포하기
 
 > **카테고리**: DevOps, Kubernetes, GitOps  
