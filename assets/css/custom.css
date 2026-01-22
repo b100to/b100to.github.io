@@ -1,22 +1,21 @@
-/* 카드 이미지 전체 표시 */
-section article .flex-none a img {
+/* 카드 이미지 16:9 전체 표시 */
+.card-thumbnail {
   width: 100% !important;
   height: auto !important;
-  object-fit: contain !important;
 }
 
 section article .flex-none {
-  width: 280px;
+  width: 200px;
 }
 
 @media (min-width: 640px) {
   section article .flex-none {
-    width: 360px;
+    width: 280px;
   }
 }
 
 @media (min-width: 1024px) {
   section article .flex-none {
-    width: 450px;
+    width: 320px;
   }
 }
