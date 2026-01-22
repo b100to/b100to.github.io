@@ -1,17 +1,22 @@
-/* 카드 이미지 비율 조정 (16:9) */
+/* 카드 이미지 전체 표시 */
 section article .flex-none a img {
-  aspect-ratio: 16 / 9 !important;
-  object-fit: cover !important;
   width: 100% !important;
   height: auto !important;
+  object-fit: contain !important;
 }
 
 section article .flex-none {
-  width: 180px;
+  width: 280px;
 }
 
 @media (min-width: 640px) {
   section article .flex-none {
-    width: 240px;
+    width: 360px;
+  }
+}
+
+@media (min-width: 1024px) {
+  section article .flex-none {
+    width: 450px;
   }
 }
