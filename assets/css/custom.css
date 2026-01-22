@@ -1,17 +1,17 @@
-/* 카드 이미지 비율 조정 (16:9) */
+/* 카드 이미지 비율 조정 (1:1 정사각형) */
 section article .flex-none a img {
-  aspect-ratio: 16 / 9 !important;
+  aspect-ratio: 1 / 1 !important;
   object-fit: cover !important;
   width: 100% !important;
   height: auto !important;
 }
 
 section article .flex-none {
-  width: 180px;
+  width: 120px;
 }
 
 @media (min-width: 640px) {
   section article .flex-none {
-    width: 240px;
+    width: 160px;
   }
 }
