@@ -1,0 +1,16 @@
+/* 카드 이미지 비율 조정 (16:9) */
+.card .thumbnail img,
+.article-list article .thumbnail img,
+.recent-content .thumbnail img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+.card .thumbnail,
+.article-list article .thumbnail,
+.recent-content .thumbnail {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}

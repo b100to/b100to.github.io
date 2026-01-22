@@ -1,0 +1,4 @@
+{{ $custom := resources.Get "css/custom.css" }}
+{{ if $custom }}
+  <style>{{ $custom.Content | safeCSS }}</style>
+{{ end }}
