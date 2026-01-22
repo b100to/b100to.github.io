@@ -22,9 +22,9 @@ async function generateOGImage(title, category, outputPath) {
     'https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-kr@latest/korean-700-normal.woff'
   ).then(res => res.arrayBuffer());
 
-  // 24:8 (3:1) 비율 이미지
-  const width = 900;
-  const height = 300;
+  // 16:9 비율 이미지
+  const width = 960;
+  const height = 540;
 
   const svg = await satori(
     {
@@ -38,7 +38,7 @@ async function generateOGImage(title, category, outputPath) {
           justifyContent: 'center',
           alignItems: 'center',
           background: `linear-gradient(135deg, ${colors.bg} 0%, ${colors.accent} 100%)`,
-          padding: '30px 60px',
+          padding: '50px 80px',
         },
         children: [
           {
@@ -61,9 +61,9 @@ async function generateOGImage(title, category, outputPath) {
                       backgroundColor: 'rgba(255,255,255,0.2)',
                       padding: '4px 12px',
                       borderRadius: '10px',
-                      fontSize: '14px',
+                      fontSize: '18px',
                       color: 'white',
-                      marginBottom: '12px',
+                      marginBottom: '20px',
                     },
                     children: category || 'Blog',
                   },
@@ -73,7 +73,7 @@ async function generateOGImage(title, category, outputPath) {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: title.length > 30 ? '22px' : '28px',
+                      fontSize: title.length > 30 ? '32px' : '40px',
                       fontWeight: 700,
                       color: 'white',
                       lineHeight: 1.3,
@@ -88,8 +88,8 @@ async function generateOGImage(title, category, outputPath) {
                   type: 'div',
                   props: {
                     style: {
-                      marginTop: '12px',
-                      fontSize: '14px',
+                      marginTop: '24px',
+                      fontSize: '18px',
                       color: 'rgba(255,255,255,0.8)',
                     },
                     children: 'Jonghwa Baek',

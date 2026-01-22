@@ -1,6 +1,6 @@
-/* 카드 이미지 비율 조정 (24:8 = 3:1) */
+/* 카드 이미지 비율 조정 (16:9) */
 section article .flex-none a img {
-  aspect-ratio: 3 / 1 !important;
+  aspect-ratio: 16 / 9 !important;
   object-fit: cover !important;
   width: 100% !important;
   height: auto !important;
