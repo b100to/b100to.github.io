@@ -1,0 +1,12 @@
+{
+  "name": "b100to-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate-og": "node scripts/generate-og-images.mjs"
+  },
+  "dependencies": {
+    "satori": "^0.10.0",
+    "@resvg/resvg-js": "^2.6.0"
+  }
+}

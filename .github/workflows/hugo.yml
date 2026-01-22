@@ -35,6 +35,18 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate OG Images
+        run: npm run generate-og
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
