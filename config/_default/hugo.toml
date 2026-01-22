@@ -1,0 +1,25 @@
+# -- Site Configuration --
+baseURL = "https://b100to.github.io/"
+defaultContentLanguage = "ko"
+languageCode = "ko-KR"
+title = "Jonghwa Baek"
+theme = "congo"
+
+enableRobotsTXT = true
+summaryLength = 30
+
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  author = "authors"

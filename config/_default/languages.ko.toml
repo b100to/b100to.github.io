@@ -1,0 +1,24 @@
+# -- Language Configuration (Korean) --
+languageCode = "ko-KR"
+languageName = "한국어"
+weight = 1
+title = "Jonghwa Baek"
+
+[params]
+  displayName = "KO"
+  isoCode = "ko"
+  rtl = false
+  dateFormat = "2006년 1월 2일"
+  description = "DevOps Engineer at Fitpet"
+  copyright = "© {year} Jonghwa Baek"
+
+[params.author]
+  name = "Jong-hwa Baek"
+  image = "img/author.jpg"
+  headline = "DevOps Engineer"
+  bio = "DevOps Engineer at Fitpet"
+  links = [
+    { github = "https://github.com/b100to" },
+    { linkedin = "https://www.linkedin.com/in/jonghwa95" },
+    { email = "mailto:b100hhss@gmail.com" }
+  ]

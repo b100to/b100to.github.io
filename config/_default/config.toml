@@ -1,0 +1,6 @@
+# -- Services Configuration --
+
+# Google Analytics
+[services]
+  [services.googleAnalytics]
+    ID = "G-TSPPK7ZV2J"

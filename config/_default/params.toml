@@ -1,0 +1,89 @@
+# -- Theme Parameters --
+colorScheme = "ocean"
+defaultAppearance = "light"
+autoSwitchAppearance = true
+enableSearch = true
+enableCodeCopy = true
+mainSections = ["posts"]
+robots = "index, follow"
+
+[homepage]
+  layout = "profile"
+  homepageImage = ""
+  showRecent = true
+  showRecentItems = 5
+  showMoreLink = true
+  showMoreLinkDest = "/posts"
+  cardView = true
+  cardViewScreenWidth = false
+  layoutBackgroundBlur = true
+
+# Comments
+showComments = true
+
+[article]
+  showDate = true
+  showViews = false
+  showLikes = false
+  showDateUpdated = true
+  showAuthor = true
+  showHero = true
+  heroStyle = "basic"
+  showBreadcrumbs = true
+  showDraftLabel = true
+  showEdit = false
+  showHeadingAnchors = true
+  showPagination = true
+  invertPagination = false
+  showReadingTime = true
+  showTableOfContents = true
+  showRelatedContent = true
+  showTaxonomies = true
+  showAuthorsBadges = false
+  showWordCount = false
+  sharingLinks = ["linkedin", "twitter", "facebook"]
+
+[list]
+  showHero = false
+  heroStyle = "background"
+  showBreadcrumbs = false
+  showSummary = true
+  showViews = false
+  showLikes = false
+  showTableOfContents = false
+  showCards = true
+  groupByYear = true
+  cardView = true
+  cardViewScreenWidth = false
+  constrainItemsWidth = false
+
+[sitemap]
+  excludedKinds = []
+
+[taxonomy]
+  showTermCount = true
+  showHero = false
+  heroStyle = "background"
+  showBreadcrumbs = false
+  showViews = false
+  showLikes = false
+  showTableOfContents = false
+  cardView = false
+
+[term]
+  showHero = false
+  heroStyle = "background"
+  showBreadcrumbs = false
+  showViews = false
+  showLikes = false
+  showTableOfContents = true
+  groupByYear = false
+  cardView = true
+  cardViewScreenWidth = false
+
+[fathomAnalytics]
+  # site = "ABC12345"
+  # domain = "llama.yoursite.com"
+
+[verification]
+  google = "6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM"
