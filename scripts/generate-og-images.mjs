@@ -22,19 +22,22 @@ async function generateOGImage(title, category, outputPath) {
     'https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-kr@latest/korean-700-normal.woff'
   ).then(res => res.arrayBuffer());
 
+  // 1:1 정사각형 이미지 (어떤 비율로 크롭되어도 텍스트 보임)
+  const size = 800;
+
   const svg = await satori(
     {
       type: 'div',
       props: {
         style: {
-          width: '1200px',
-          height: '630px',
+          width: `${size}px`,
+          height: `${size}px`,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           background: `linear-gradient(135deg, ${colors.bg} 0%, ${colors.accent} 100%)`,
-          padding: '60px',
+          padding: '80px',
         },
         children: [
           {
@@ -55,11 +58,11 @@ async function generateOGImage(title, category, outputPath) {
                   props: {
                     style: {
                       backgroundColor: 'rgba(255,255,255,0.2)',
-                      padding: '8px 24px',
-                      borderRadius: '20px',
-                      fontSize: '24px',
+                      padding: '8px 20px',
+                      borderRadius: '16px',
+                      fontSize: '20px',
                       color: 'white',
-                      marginBottom: '30px',
+                      marginBottom: '24px',
                     },
                     children: category || 'Blog',
                   },
@@ -69,11 +72,11 @@ async function generateOGImage(title, category, outputPath) {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: title.length > 30 ? '48px' : '56px',
+                      fontSize: title.length > 25 ? '32px' : '40px',
                       fontWeight: 700,
                       color: 'white',
-                      lineHeight: 1.3,
-                      maxWidth: '1000px',
+                      lineHeight: 1.4,
+                      maxWidth: '640px',
                       textAlign: 'center',
                     },
                     children: title,
@@ -84,8 +87,8 @@ async function generateOGImage(title, category, outputPath) {
                   type: 'div',
                   props: {
                     style: {
-                      marginTop: '40px',
-                      fontSize: '28px',
+                      marginTop: '32px',
+                      fontSize: '22px',
                       color: 'rgba(255,255,255,0.8)',
                     },
                     children: 'Jonghwa Baek',
@@ -98,8 +101,8 @@ async function generateOGImage(title, category, outputPath) {
       },
     },
     {
-      width: 1200,
-      height: 630,
+      width: size,
+      height: size,
       fonts: [
         {
           name: 'Noto Sans KR',
@@ -112,7 +115,7 @@ async function generateOGImage(title, category, outputPath) {
   );
 
   const resvg = new Resvg(svg, {
-    fitTo: { mode: 'width', value: 1200 },
+    fitTo: { mode: 'width', value: 800 },
   });
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
