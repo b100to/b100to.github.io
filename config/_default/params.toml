@@ -8,8 +8,8 @@ mainSections = ["posts"]
 robots = "index, follow"
 
 [homepage]
-  layout = "profile"
-  homepageImage = ""
+  layout = "hero"
+  homepageImage = "img/hero.jpg"
   showRecent = true
   showRecentItems = 5
   showMoreLink = true
