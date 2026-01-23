@@ -25,7 +25,7 @@ showComments = true
   repo = "b100to/b100to.github.io"
   issueTerm = "pathname"
   label = "💬 comment"
-  theme = "https://b100to.github.io/css/utterances-custom.css"
+  theme = "github-light"
 
 [article]
   showDate = true
