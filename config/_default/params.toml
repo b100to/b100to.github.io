@@ -18,21 +18,14 @@ robots = "index, follow"
   cardViewScreenWidth = false
   layoutBackgroundBlur = true
 
-# Comments (Giscus)
+# Comments (Utterances)
 showComments = true
 
-[giscus]
+[utterances]
   repo = "b100to/b100to.github.io"
-  repoId = "R_kgDON0A_9g"
-  category = "Announcements"
-  categoryId = "DIC_kwDON0A_9s4C1Rbj"
-  mapping = "pathname"
-  strict = "0"
-  reactionsEnabled = "1"
-  emitMetadata = "0"
-  inputPosition = "top"
-  theme = "preferred_color_scheme"
-  lang = "ko"
+  issueTerm = "pathname"
+  label = "💬 comment"
+  theme = "https://b100to.github.io/css/utterances-custom.css"
 
 [article]
   showDate = true

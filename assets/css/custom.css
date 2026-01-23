@@ -19,3 +19,20 @@ section article .flex-none {
     width: 320px;
   }
 }
+
+/* Utterances 댓글 스타일 */
+.utterances-container {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.utterances {
+  max-width: 100% !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .utterances-container {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+}
