@@ -31,6 +31,11 @@ section article .flex-none {
   max-width: 100% !important;
 }
 
+/* Utterances powered by 텍스트 숨기기 */
+.utterances-frame {
+  margin-bottom: -30px !important;
+}
+
 @media (prefers-color-scheme: dark) {
   .utterances-container {
     border-top-color: rgba(255, 255, 255, 0.08);

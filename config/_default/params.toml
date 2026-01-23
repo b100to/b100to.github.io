@@ -94,3 +94,7 @@ showComments = true
 
 [verification]
   google = "6prC6g8H0Mu0K2HmBFCEt15RaC7InwjRSdrt3DAkeQM"
+
+[footer]
+  showThemeAttribution = false
+  showCopyright = true
