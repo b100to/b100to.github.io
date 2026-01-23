@@ -18,8 +18,21 @@ robots = "index, follow"
   cardViewScreenWidth = false
   layoutBackgroundBlur = true
 
-# Comments
+# Comments (Giscus)
 showComments = true
+
+[giscus]
+  repo = "b100to/b100to.github.io"
+  repoId = "R_kgDON0A_9g"
+  category = "Announcements"
+  categoryId = "DIC_kwDON0A_9s4C1Rbj"
+  mapping = "pathname"
+  strict = "0"
+  reactionsEnabled = "1"
+  emitMetadata = "0"
+  inputPosition = "top"
+  theme = "preferred_color_scheme"
+  lang = "ko"
 
 [article]
   showDate = true
@@ -42,6 +55,7 @@ showComments = true
   showAuthorsBadges = false
   showWordCount = false
   sharingLinks = ["linkedin", "twitter", "facebook"]
+  showComments = true
 
 [list]
   showHero = false
