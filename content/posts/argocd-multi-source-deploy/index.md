@@ -1,7 +1,8 @@
 ---
 title: "ArgoCD에서 Nginx Helm 차트 멀티소스 배포하기"
 date: 2025-02-26T19:27:00+09:00
-description: "ArgoCD에서 Nginx Helm 차트 멀티소스 배포하기"
+description: "ArgoCD 멀티소스 기능으로 Helm 차트와 values 파일을 분리 관리하는 방법. Bitnami 차트와 자체 Git 레포의 values를 조합하여 배포하는 실전 가이드."
+keywords: ["ArgoCD 멀티소스", "ArgoCD multiple sources", "Helm values 분리", "ArgoCD Helm 배포", "GitOps Helm", "ArgoCD Application 설정", "values 파일 별도 관리"]
 categories: ["ArgoCD"]
 tags: ["ArgoCD", "Helm", "GitOps", "Kubernetes", "멀티소스배포"]
 showHero: true

@@ -1,7 +1,8 @@
 ---
 title: "Karpenter + Spot 인스턴스: 노드가 생성되지 않는 문제 해결하기"
 date: 2026-01-26T18:00:00+09:00
-description: "Spot 인스턴스를 사용할 때 특정 Zone에서 노드가 생성되지 않는 문제를 경험하고, 해결 과정을 공유합니다."
+description: "Karpenter에서 'no instance type has the required offering' 에러가 발생할 때 원인과 해결 방법. Spot 가격이 있어도 용량이 없는 경우 인스턴스 타입 다양화로 해결하는 방법을 설명합니다."
+keywords: ["Karpenter Spot 노드 생성 안됨", "no instance type has the required offering", "Karpenter InsufficientInstanceCapacity", "EKS Spot 인스턴스 가용성", "Karpenter NodePool 설정", "Spot 용량 부족 해결"]
 categories: ["Kubernetes"]
 tags: ["Karpenter", "Spot", "AWS", "EKS", "Kubernetes", "트러블슈팅"]
 showHero: true

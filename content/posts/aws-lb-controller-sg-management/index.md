@@ -1,7 +1,8 @@
 ---
 title: "AWS Load Balancer Controller의 보안 그룹 자동 관리, 알고 쓰자"
 date: 2026-01-22T18:00:00+09:00
-description: "AWS Load Balancer Controller가 Node Security Group을 자동 관리하는 방식과 주의점"
+description: "AWS Load Balancer Controller가 Node Security Group 인바운드 규칙을 자동으로 추가/삭제하는 동작 방식과 예상치 못한 문제를 방지하는 설정 방법을 설명합니다."
+keywords: ["AWS Load Balancer Controller 보안그룹", "EKS ALB 보안그룹", "manage-backend-security-group-rules", "ALB Ingress 보안그룹 자동관리", "EKS NodePort 보안그룹", "target-type instance vs ip"]
 categories: ["Kubernetes"]
 tags: ["AWS", "EKS", "ALB", "Kubernetes", "DevOps"]
 showHero: true

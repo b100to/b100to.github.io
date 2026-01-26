@@ -1,7 +1,8 @@
 ---
 title: "Terramate로 IaC 관리하기: 심플함의 미학"
 date: 2025-02-04T16:31:25+09:00
-description: "Terramate로 IaC 관리하기: 심플함의 미학"
+description: "Terragrunt 대신 Terramate를 선택한 이유와 실전 사용법. globals, generate_hcl을 활용한 DRY한 Terraform 프로젝트 구성 방법을 예제와 함께 설명합니다."
+keywords: ["Terramate 사용법", "Terramate vs Terragrunt", "Terraform DRY", "Terramate globals", "Terramate generate_hcl", "IaC 코드 관리", "Terraform 프로젝트 구조"]
 categories: ["Terraform"]
 tags: ["IaC", "Terramate", "AWS", "DevOps", "Terraform", "Terragrunt"]
 showHero: true
