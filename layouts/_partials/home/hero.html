@@ -1,0 +1,25 @@
+{{/* Hero layout with background image */}}
+{{ $homepageImage := "" }}
+{{ with .Site.Params.homepage.homepageImage }}
+  {{ $img := resources.Get . }}
+  {{ if $img }}
+    {{ $homepageImage = $img.RelPermalink }}
+  {{ end }}
+{{ end }}
+
+<article class="text-left mb-6">
+  <h1 class="text-3xl font-bold mb-2">{{ .Site.Title }}</h1>
+  <section class="prose dark:prose-invert">
+    {{ .Content | emojify }}
+  </section>
+</article>
+
+{{ if $homepageImage }}
+<div class="rounded-lg mb-8 overflow-hidden" style="height: 200px;">
+  <img src="{{ $homepageImage }}" alt="Hero" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+</div>
+{{ end }}
+
+<section>
+  {{ partial "recent-articles.html" . }}
+</section>
