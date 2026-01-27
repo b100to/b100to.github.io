@@ -1,6 +1,6 @@
 ---
 title: "AWS 인증 방식 비교: Access Key부터 SSO, Authentik까지"
-date: 2026-01-27T17:30:00+09:00
+date: 2026-01-27T16:50:00+09:00
 description: "AWS CLI/Terraform 인증 방식을 비교하고, 팀 규모에 따른 최적의 인증 전략을 알아봅니다. Access Key, AWS SSO, AssumeRole, 그리고 Authentik/Keycloak까지."
 keywords: ["AWS", "SSO", "Authentik", "Keycloak", "OIDC", "SAML", "인증", "DevOps"]
 categories: ["AWS"]
@@ -221,3 +221,4 @@ ingress:
 
 Access Key 자체를 없애려면 **SSO 또는 자체 IdP**가 필요합니다. 팀 규모와 운영 리소스에 맞춰 선택하면 됩니다.
 
+  
