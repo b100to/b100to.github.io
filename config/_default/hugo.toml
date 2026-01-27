@@ -2,7 +2,7 @@
 baseURL = "https://b100to.github.io/"
 defaultContentLanguage = "ko"
 languageCode = "ko-KR"
-title = "Jonghwa Baek"
+title = "Ops Diary"
 theme = "congo"
 
 enableRobotsTXT = true
