@@ -23,3 +23,8 @@ summaryLength = 30
   tag = "tags"
   category = "categories"
   author = "authors"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
