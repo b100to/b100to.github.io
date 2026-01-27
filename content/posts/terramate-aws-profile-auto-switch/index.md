@@ -94,9 +94,74 @@ globals {
 
 ### 4. AWS Credentials 설정
 
-`~/.aws/credentials`에 환경별 프로필을 설정합니다:
+`~/.aws/config`와 `~/.aws/credentials`에 환경별 프로필을 설정합니다. 자격증명 관리 방식에 따라 여러 옵션이 있습니다.
+
+#### 방법 1: AWS IAM Identity Center (SSO) - 권장
+
+AWS Organizations와 함께 사용하는 중앙 집중식 인증 방식입니다. 브라우저로 로그인하면 임시 자격증명이 자동 발급됩니다.
 
 ```ini
+# ~/.aws/config
+[profile dev]
+sso_session = my-sso
+sso_account_id = 111111111111
+sso_role_name = AdministratorAccess
+region = ap-northeast-2
+
+[profile prd]
+sso_session = my-sso
+sso_account_id = 222222222222
+sso_role_name = AdministratorAccess
+region = ap-northeast-2
+
+[sso-session my-sso]
+sso_start_url = https://my-company.awsapps.com/start
+sso_region = ap-northeast-2
+sso_registration_scopes = sso:account:access
+```
+
+```bash
+# 로그인 (브라우저가 열림)
+aws sso login --profile dev
+```
+
+#### 방법 2: AWS Vault - 로컬 자격증명 암호화
+
+[AWS Vault](https://github.com/99designs/aws-vault)는 자격증명을 OS 키체인(macOS Keychain, Windows Credential Manager 등)에 암호화하여 저장합니다. 평문 credentials 파일보다 안전합니다.
+
+```bash
+# 설치 (macOS)
+brew install aws-vault
+
+# 프로필 추가 (키체인에 암호화 저장)
+aws-vault add dev
+aws-vault add prd
+
+# 사용
+aws-vault exec dev -- terraform plan
+```
+
+Terramate와 함께 사용 시 wrapper 스크립트가 필요할 수 있습니다.
+
+#### 방법 3: 1Password Shell Plugin
+
+[1Password](https://1password.com/)에 AWS 자격증명을 저장하고, Shell Plugin으로 자동 주입합니다. 팀 단위 비밀 공유에 유용합니다.
+
+```bash
+# 1Password CLI 설치 후
+eval $(op signin)
+
+# ~/.aws/config
+[profile dev]
+credential_process = op run --env-file=~/.aws/1p-env -- aws configure export-credentials --profile dev
+```
+
+#### 방법 4: Static Credentials (비권장)
+
+가장 단순하지만 보안상 권장하지 않습니다. 테스트 환경에서만 사용하세요.
+
+```ini
+# ~/.aws/credentials
 [dev]
 aws_access_key_id = AKIA...
 aws_secret_access_key = ...
@@ -105,6 +170,15 @@ aws_secret_access_key = ...
 aws_access_key_id = AKIA...
 aws_secret_access_key = ...
 ```
+
+#### 어떤 방법을 선택할까?
+
+| 방법 | 보안 | 편의성 | 적합한 경우 |
+|-----|-----|-------|-----------|
+| SSO | 높음 | 중간 | 회사 AWS Organizations 사용 시 |
+| AWS Vault | 높음 | 중간 | 개인/소규모 팀, IAM User 사용 시 |
+| 1Password | 높음 | 높음 | 이미 1Password 사용 중인 팀 |
+| Static | 낮음 | 높음 | 로컬 테스트만 |
 
 ## 적용 후
 
