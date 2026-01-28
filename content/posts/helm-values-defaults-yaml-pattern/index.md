@@ -161,6 +161,53 @@ update-defaults:
 	./scripts/update-defaults.sh grafana/loki 06_values/infra/monitoring/loki/_defaults.yaml
 ```
 
+## 고려사항
+
+이 패턴에도 트레이드오프가 있습니다.
+
+### 레포지토리 용량 증가
+
+Helm chart의 기본값 파일은 수백~수천 줄이 될 수 있습니다. 여러 chart를 관리하면 `_defaults.yaml` 파일들이 쌓여 레포가 무거워질 수 있습니다.
+
+```
+# 예시: 주요 chart들의 기본값 크기
+kafka-ui:     ~200줄
+loki:         ~1,500줄
+kube-prometheus-stack: ~4,000줄
+```
+
+필요한 chart만 선별적으로 저장하거나, 자주 참조하는 섹션만 추출하는 방식도 고려해볼 수 있습니다.
+
+### 버전 업데이트 시 동기화 필요
+
+chart 버전을 올릴 때마다 `_defaults.yaml`도 함께 갱신해야 합니다. 그렇지 않으면 AI가 이전 버전의 옵션을 참조하게 됩니다.
+
+ArgoCD로 버전 관리를 한다면 Application manifest에서 버전을 참조할 수 있습니다:
+
+```yaml
+# argocd/applications/kafka-ui.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  source:
+    chart: kafka-ui
+    repoURL: https://provectus.github.io/kafka-ui-charts
+    targetRevision: 1.5.3  # 이 버전 참조
+```
+
+이 부분을 `.claude/CLAUDE.md`에 명시해두면 됩니다:
+
+```markdown
+## Helm Chart 작업 시 규칙
+
+- values 수정 전 `_defaults.yaml` 파일을 참조할 것
+- chart 버전은 ArgoCD Application manifest의 `targetRevision` 확인할 것
+- chart 버전 업그레이드 시 `helm show values`로 `_defaults.yaml` 갱신할 것
+- 기본값과 다른 설정에는 주석으로 이유 명시할 것
+```
+
+AI에게 이 규칙을 알려두면, ArgoCD Application에서 버전을 확인하고 해당 버전에 맞는 기본값 파일을 갱신합니다.
+
 ## 결론
 
 AI와 협업할 때는 **AI가 참조할 수 있는 컨텍스트**를 코드베이스에 남겨두는 게 중요합니다.
