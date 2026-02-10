@@ -51,7 +51,25 @@ for i in $(seq 1 20); do dig +short app.example.com @ns-xxx.awsdns-xx.com; done
 
 정밀한 퍼센트 제어는 불가능하지만, "대략 70% 정도는 v2로 간다" 수준의 제어는 된다. 트래픽이 충분히 많은 프로덕션 환경이라면 의미 있는 수준으로 분배된다.
 
-다만 External-DNS가 레코드를 관리하는 환경에서는 **수동으로 가중치 레코드를 만들어야 한다**는 문제가 있다. External-DNS는 단순 A/CNAME 레코드만 생성하지, 가중치 레코드 세트를 만들어주지 않는다. GitOps 원칙과도 맞지 않아서, 결국 다른 방법을 찾게 됐다.
+그리고 External-DNS가 Route53 가중치 라우팅을 **어노테이션으로 지원**한다. 수동으로 Route53 콘솔에서 만들 필요 없이 GitOps로 관리할 수 있다.
+
+```yaml
+# v1 클러스터 Ingress
+annotations:
+  external-dns.alpha.kubernetes.io/hostname: app.example.com
+  external-dns.alpha.kubernetes.io/set-identifier: "v1-cluster"
+  external-dns.alpha.kubernetes.io/aws-weight: "30"
+
+# v2 클러스터 Ingress
+annotations:
+  external-dns.alpha.kubernetes.io/hostname: app.example.com
+  external-dns.alpha.kubernetes.io/set-identifier: "v2-cluster"
+  external-dns.alpha.kubernetes.io/aws-weight: "70"
+```
+
+양쪽 External-DNS가 각각 가중치 레코드 세트를 생성해서, Route53에서 자동으로 분배된다. 다만 이 방식은 **양쪽 클러스터에서 External-DNS가 동시에 동작해야 하고**, `set-identifier`가 달라야 충돌이 나지 않는다. `txtOwnerId`도 각 클러스터별로 다르게 설정해야 한다.
+
+결국 가중치 라우팅이 필요한 상황이라면 이 어노테이션 방식이 정석이다. 다만 내 경우엔 이미 v1 External-DNS를 꺼둔 상태라 단계별 전환 방식을 선택했다.
 
 ## External-DNS의 TXT 소유권 메커니즘
 
