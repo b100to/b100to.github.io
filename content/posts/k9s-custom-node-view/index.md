@@ -12,11 +12,11 @@ heroStyle: "background"
 EKS에서 `kubectl get nodes`를 치면 이런 화면을 보게 됩니다.
 
 ```
-NAME                                              STATUS   ROLES    AGE
-ip-10-0-16-143.ap-northeast-2.compute.internal    Ready    <none>   9d
-ip-10-0-20-134.ap-northeast-2.compute.internal    Ready    <none>   2d
-ip-10-0-27-64.ap-northeast-2.compute.internal     Ready    <none>   3d
-fargate-ip-10-0-64-59.ap-northeast-2.compute.internal  Ready  <none>  1d
+NAME                                                STATUS   AGE
+ip-10-0-xx-xxx.ap-northeast-2.compute.internal      Ready    9d
+ip-10-0-xx-xxx.ap-northeast-2.compute.internal      Ready    2d
+ip-10-0-xx-xxx.ap-northeast-2.compute.internal      Ready    3d
+fargate-ip-10-0-xx-xx.ap-northeast-2.compute.internal  Ready  1d
 ```
 
 어떤 노드가 base이고, 어떤 게 batch인지 전혀 알 수가 없습니다. IP 기반 Private DNS가 노드 이름이라 의미 있는 정보가 없기 때문입니다.
@@ -63,9 +63,9 @@ kubectl get nodes -L node-group-type
 
 ```
 NAME                                           STATUS   node-group-type
-ip-10-0-16-143.ap-northeast-2...               Ready    base
-ip-10-0-20-134.ap-northeast-2...               Ready    batch
-fargate-ip-10-0-64-59.ap-northeast-2...        Ready
+ip-10-0-xx-xxx.ap-northeast-2...               Ready    base
+ip-10-0-xx-xxx.ap-northeast-2...               Ready    batch
+fargate-ip-10-0-xx-xx.ap-northeast-2...        Ready
 ```
 
 Fargate 노드는 Karpenter가 관리하지 않으므로 라벨이 비어있어 자연스럽게 구분됩니다.
@@ -93,6 +93,7 @@ views:
       - '%MEM'
       - AGE
       - NAME|W
+      - VERSION|W
 ```
 
 핵심은 이 문법입니다:
@@ -115,12 +116,11 @@ views:
 | 4-7 | CPU/MEM/%CPU/%MEM | 리소스 현황이 가장 자주 보는 정보 |
 | 8 | AGE | 노드 수명 (방금 뜬 노드, 오래된 노드 파악) |
 | 9 | NAME\|W | wide 모드에서만 표시 (평소엔 불필요) |
+| 10 | VERSION\|W | wide 모드에서만 표시 |
 
-**제거한 것들:**
-- **ROLE** - EKS Karpenter/Fargate 환경에서 항상 `<none>`이라 의미 없음
-- **VERSION** - 거의 안 봄. 필요하면 describe로 확인
+**ROLE을 제거한 이유** - EKS Karpenter/Fargate 환경에서 항상 `<none>`이라 의미 없습니다.
 
-**NAME을 wide로 뺀 이유** - IP 기반 이름이 너무 길어서 화면을 차지하기만 합니다. TYPE 라벨이 있으면 노드 식별에 NAME이 꼭 필요하지 않고, 정말 필요하면 `ctrl+e`(wide 토글)로 확인하면 됩니다.
+**NAME, VERSION을 wide로 뺀 이유** - NAME은 IP 기반이라 길기만 하고, TYPE 라벨이 있으면 노드 식별에 굳이 필요하지 않습니다. VERSION도 자주 볼 일이 없어서 wide로 빼두고, 필요할 때 `ctrl+e`(wide 토글)로 확인하면 됩니다.
 
 ### 컬럼 속성 참고
 
