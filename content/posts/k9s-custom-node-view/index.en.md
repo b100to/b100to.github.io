@@ -9,6 +9,10 @@ showHero: true
 heroStyle: "background"
 ---
 
+> **TL;DR** — Add a label like `node-role: app` to your Karpenter NodePool, then add `TYPE:.metadata.labels.node-role` as a custom column in k9s `views.yaml`. Node purpose becomes instantly visible.
+
+---
+
 Running `kubectl get nodes` on EKS gives you something like this:
 
 ```
