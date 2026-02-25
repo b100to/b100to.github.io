@@ -154,27 +154,34 @@ async function main() {
     .filter(d => d.isDirectory())
     .map(d => d.name);
 
+  // 언어별 파일 매핑: [소스파일, 출력파일]
+  const langVariants = [
+    ['index.md', 'featured.png'],
+    ['index.en.md', 'featured.en.png'],
+  ];
+
   for (const dir of postDirs) {
-    const postPath = join(CONTENT_DIR, dir, 'index.md');
-    const outputPath = join(CONTENT_DIR, dir, 'featured.png');
+    for (const [sourceFile, outputFile] of langVariants) {
+      const postPath = join(CONTENT_DIR, dir, sourceFile);
+      const outputPath = join(CONTENT_DIR, dir, outputFile);
 
-    // 이미 featured 이미지가 있으면 스킵
-    if (existsSync(outputPath)) {
-      console.log(`Skipped (exists): ${outputPath}`);
-      continue;
+      if (existsSync(outputPath)) {
+        console.log(`Skipped (exists): ${outputPath}`);
+        continue;
+      }
+
+      if (!existsSync(postPath)) continue;
+
+      const content = readFileSync(postPath, 'utf-8');
+      const frontMatter = extractFrontMatter(content);
+
+      const title = frontMatter.title || dir;
+      const category = Array.isArray(frontMatter.categories)
+        ? frontMatter.categories[0]
+        : frontMatter.categories || '';
+
+      await generateOGImage(title, category, outputPath);
     }
-
-    if (!existsSync(postPath)) continue;
-
-    const content = readFileSync(postPath, 'utf-8');
-    const frontMatter = extractFrontMatter(content);
-
-    const title = frontMatter.title || dir;
-    const category = Array.isArray(frontMatter.categories)
-      ? frontMatter.categories[0]
-      : frontMatter.categories || '';
-
-    await generateOGImage(title, category, outputPath);
   }
 }
 
