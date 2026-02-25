@@ -1,21 +1,21 @@
-# -- Menus Configuration (Korean) --
+# -- Menus Configuration (English) --
 [[main]]
-  name = "포스트"
+  name = "Posts"
   pageRef = "posts"
   weight = 10
 
 [[main]]
-  name = "카테고리"
+  name = "Categories"
   pageRef = "categories"
   weight = 20
 
 [[main]]
-  name = "태그"
+  name = "Tags"
   pageRef = "tags"
   weight = 30
 
 [[main]]
-  name = "소개"
+  name = "About"
   pageRef = "about"
   weight = 40
 
