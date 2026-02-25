@@ -1,0 +1,24 @@
+# -- Language Configuration (English) --
+languageCode = "en-US"
+languageName = "English"
+weight = 2
+title = "Ops Diary"
+
+[params]
+  displayName = "EN"
+  isoCode = "en"
+  rtl = false
+  dateFormat = "January 2, 2006"
+  description = "DevOps Engineer"
+  copyright = "© {year} Jonghwa Baek"
+
+[params.author]
+  name = "Jong-hwa Baek"
+  image = "img/author.jpg"
+  headline = "DevOps Engineer"
+  bio = "DevOps Engineer"
+  links = [
+    { github = "https://github.com/b100to" },
+    { linkedin = "https://www.linkedin.com/in/jonghwa95" },
+    { email = "mailto:b100hhss@gmail.com" }
+  ]
