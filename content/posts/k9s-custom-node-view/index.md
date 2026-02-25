@@ -9,7 +9,7 @@ showHero: true
 heroStyle: "background"
 ---
 
-> **TL;DR** — Karpenter NodePool에 `node-role: app` 같은 라벨을 붙이고, k9s `views.yaml`에서 `TYPE:.metadata.labels.node-role` 컬럼을 추가하면 노드 용도가 한눈에 보입니다.
+> TL;DR — Karpenter NodePool에 `node-role: app` 같은 라벨을 붙이고, k9s `views.yaml`에서 `TYPE:.metadata.labels.node-role` 컬럼을 추가하면 노드 용도가 한눈에 보입니다.
 
 ---
 
