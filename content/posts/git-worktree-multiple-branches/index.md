@@ -9,6 +9,8 @@ showHero: true
 heroStyle: "background"
 ---
 
+> **TL;DR**: `git worktree`를 쓰면 같은 레포에서 브랜치 전환 없이 여러 브랜치를 동시에 다른 디렉토리에 체크아웃할 수 있습니다.
+
 오늘 Claude Code 에이전트를 돌리다가 "에이전트가 특정 브랜치에 있는데 다른 브랜치에서도 작업하려면 어떻게 하지?"라는 상황을 마주쳤습니다. 그때서야 `git worktree`가 무엇인지 제대로 와 닿았어요.
 
 ## git worktree가 뭔데?
