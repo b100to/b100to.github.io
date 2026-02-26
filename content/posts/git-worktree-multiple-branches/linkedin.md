@@ -2,7 +2,7 @@
 
 https://b100to.github.io/posts/git-worktree-multiple-branches/
 
-**TL;DR**: git worktree로 같은 레포에서 여러 브랜치를 동시에 체크아웃할 수 있습니다.
+TL;DR: git worktree로 같은 레포에서 여러 브랜치를 동시에 체크아웃할 수 있습니다.
 
 ---
 
@@ -16,7 +16,7 @@ Claude Code를 터미널에서 쓰다가 한국어 2바이트 문자 처리 문�
 
 https://b100to.github.io/posts/git-worktree-multiple-branches/
 
-**TL;DR**: `git worktree` lets you check out multiple branches from the same repo simultaneously in separate directories.
+TL;DR: `git worktree` lets you check out multiple branches from the same repo simultaneously in separate directories.
 
 I switched from Claude Code terminal to the VSCode extension because of a Korean 2-byte character rendering issue — cursor misalignment and character overlap when typing Korean. That's when I ran into the "agent is on a branch, I need a different one" problem. `git worktree` solved it.
 
