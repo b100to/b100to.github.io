@@ -1,0 +1,68 @@
+---
+title: "git worktree로 여러 브랜치를 동시에 체크아웃하기"
+date: 2026-02-26T13:40:00+09:00
+description: "git worktree를 사용하면 같은 레포에서 여러 브랜치를 동시에 다른 디렉토리에 체크아웃할 수 있습니다. 브랜치 전환 없이 병렬 작업이 필요할 때 유용한 Git 기능입니다."
+keywords: ["git worktree", "git 여러 브랜치", "git 병렬 작업", "브랜치 동시 작업", "git 멀티 브랜치"]
+categories: ["TIL"]
+tags: ["Git", "개발환경", "생산성"]
+showHero: true
+heroStyle: "background"
+---
+
+오늘 Claude Code 에이전트를 돌리다가 "에이전트가 특정 브랜치에 있는데 다른 브랜치에서도 작업하려면 어떻게 하지?"라는 상황을 마주쳤습니다. 그때서야 `git worktree`가 무엇인지 제대로 와 닿았어요.
+
+## git worktree가 뭔데?
+
+Git은 기본적으로 하나의 레포에 하나의 워킹 디렉토리를 씁니다. 브랜치를 바꾸려면 `git checkout` 또는 `git switch`로 전환해야 하죠.
+
+`git worktree`는 이 제약을 없애줍니다. **같은 레포(.git 오브젝트 공유)를 여러 디렉토리에 동시에 체크아웃**할 수 있게 해줍니다.
+
+```
+~/works/my-repo/          ← main 브랜치
+~/works/my-repo-feat/     ← feat/new-feature 브랜치 (같은 .git 공유)
+~/works/my-repo-hotfix/   ← hotfix/urgent-fix 브랜치 (같은 .git 공유)
+```
+
+세 디렉토리 모두 동시에 살아있고, 각각 독립된 브랜치 상태를 유지합니다.
+
+## 사용법
+
+```bash
+# 기존 브랜치를 새 디렉토리에 체크아웃
+git worktree add ../my-repo-feat feat/new-feature
+
+# 새 브랜치 생성하면서 체크아웃
+git worktree add -b feat/another-thing ../my-repo-another
+
+# 목록 확인
+git worktree list
+
+# 작업 끝나면 제거
+git worktree remove ../my-repo-feat
+```
+
+## 어떤 상황에 쓰면 좋을까?
+
+**1. AI 에이전트 병렬 실행**
+
+요즘 Claude Code 같은 AI 코딩 에이전트를 쓰다 보면, 에이전트가 특정 브랜치에서 작업 중일 때 나는 다른 브랜치에서 별도 작업을 하고 싶은 경우가 생깁니다. 이때 워크트리로 디렉토리를 분리하면 각각 독립적으로 에이전트를 실행할 수 있어요.
+
+**2. 빌드/테스트 비교**
+
+두 브랜치의 동작을 동시에 비교하고 싶을 때. 하나의 터미널에서는 `main` 빌드를, 다른 터미널에서는 `feat/xxx` 빌드를 동시에 돌릴 수 있습니다.
+
+**3. 긴급 핫픽스**
+
+feature 브랜치에서 작업 중인데 갑자기 프로덕션 버그가 터졌을 때. 작업 중인 상태를 stash하거나 커밋할 필요 없이, `main`을 다른 디렉토리에 체크아웃해서 핫픽스 작업을 할 수 있습니다.
+
+## 주의할 점
+
+- 같은 브랜치를 두 워크트리에 동시에 체크아웃하는 건 안 됩니다 (Git이 막아줌)
+- `.git` 오브젝트는 공유하므로 디스크 낭비는 없어요. 워킹 파일들만 중복됩니다
+- IDE를 쓴다면 각 워크트리 디렉토리를 별도 프로젝트/워크스페이스로 열면 됩니다
+
+## Claude Code와의 연결
+
+Claude Code의 Task 툴에 `isolation: "worktree"` 옵션이 있는데, 이게 바로 이 git worktree를 활용한 기능입니다. 에이전트가 격리된 워크트리에서 작업하게 해서 메인 작업 디렉토리에 영향을 주지 않게 합니다.
+
+알고 나면 간단한 개념인데, 몰라서 "브랜치 전환밖에 방법이 없겠지..."라고 생각했던 게 아쉬웠어요. Git에는 이런 소소하지만 유용한 기능들이 꽤 있는 것 같습니다.
