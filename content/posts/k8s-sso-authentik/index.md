@@ -1,5 +1,5 @@
 ---
-title: "Kubernetes 클러스터 SSO 도입기 - Authentik으로 5개 서비스 통합하기"
+title: "Kubernetes 클러스터 SSO 도입기 - Authentik으로 서비스 통합하기"
 date: 2026-03-10T15:35:22+09:00
 description: "Authentik으로 ArgoCD, Grafana, Argo Workflows, Airflow, Kubecost를 단일 SSO로 통합한 과정. OIDC, Generic OAuth, oauth2-proxy, SAML 패턴과 실제 삽질 포인트를 정리했다."
 keywords: ["Authentik", "SSO", "Kubernetes", "OIDC", "OAuth2", "SAML", "Traefik", "ArgoCD", "External Secrets", "EKS", "GitOps"]
@@ -9,7 +9,7 @@ showHero: true
 heroStyle: "background"
 ---
 
-> **TL;DR**: Authentik으로 5개 서비스를 단일 SSO로 통합했다. 서비스마다 프로토콜이 달라 OIDC·Generic OAuth·oauth2-proxy·SAML 4가지 패턴을 써야 했고, Traefik v3 문법 변경과 무한 리다이렉트 등 예상치 못한 삽질이 많았다.
+> **TL;DR**: Authentik으로 여러 서비스를 단일 SSO로 통합했다. 서비스마다 프로토콜이 달라 OIDC·Generic OAuth·oauth2-proxy·SAML 4가지 패턴을 써야 했고, Traefik v3 문법 변경과 무한 리다이렉트 등 예상치 못한 삽질이 많았다.
 
 ---
 
@@ -19,7 +19,7 @@ heroStyle: "background"
 |--|--|
 | **역할** | DevOps Engineer (설계 · 구현 · 운영) |
 | **기간** | 2026년 초 |
-| **규모** | EKS 클러스터 2개 (dev / prd), 연동 서비스 5개 |
+| **규모** | EKS 클러스터 2개 (dev / prd), 연동 서비스 다수 |
 | **기술 스택** | Authentik · OIDC · OAuth2 · SAML · Traefik · ArgoCD · External Secrets · AWS EKS |
 | **핵심 성과** | 서비스별 개별 계정 → 구글 계정 단일 로그인 / 장기 자격증명(IAM User) 전면 제거 / 온보딩 계정 작업 수동 → 자동화 |
 
