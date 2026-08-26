@@ -13,31 +13,37 @@ heroStyle: "background"
 
 Scaling pods to zero does not reduce the bill. The node has to go away, and a node only goes away when nothing is left on it that would have to be evicted first.
 
-Dev-environment nightly and weekend scale-down had been running on EventBridge plus Lambda for a while. It worked, but two things kept bothering me.
+This post is about that, but it started somewhere simpler.
+
+**I wanted to build an operator.** I am comfortable running controllers and had never written one, and I wanted to touch the platform-engineering side directly rather than only consume it.
+
+There happened to be something worth fixing.
 
 ---
 
-## 1. The cost of acting from outside the cluster
+## 1. Not because Lambda is bad, but because we do not use it
 
-**It cannot see what is happening inside.**
+Dev-environment nightly and weekend scale-down had been running on EventBridge plus Lambda for a while, and running fine. The problem was not that it failed.
 
-Lambda sets replicas to zero at a fixed time. At that moment it does not know:
+**We do not otherwise use Lambda.** Nearly everything sits on Kubernetes and Terraform, and this one feature added a second place to maintain.
 
-- whether somebody scaled a workload up during an incident
-- whether an HPA already owns those replicas
-- whether the deployment landed thirty seconds ago
+That makes ordinary questions awkward:
 
-All of those require knowing the cluster's current state, and from outside you have to go fetch it every time.
+- where do I go to change the schedule
+- how does that change get deployed
+- if someone inherits this, where do they start
 
-**The configuration is invisible to developers.**
+What bothered me was not the code but **who maintains it and how**. Everything inside the Kubernetes ecosystem is deployed, inspected and permissioned the same way. This one thing sat outside all of it.
 
-The schedule lives in Lambda code or environment variables. A developer cannot check when their namespace goes down, and changing it means filing a request.
+There were technical limits too.
 
-**And it fires once.**
+**It cannot see inside the cluster.** Lambda sets replicas to zero at a fixed time. It does not know whether somebody scaled a workload up during an incident, or whether an HPA already owns those replicas.
 
-If the Lambda fails at 20:00, that night simply does not happen. Nothing retries until the next scheduled run.
+**The configuration is invisible to developers.** The schedule lives in Lambda code or environment variables, so a developer cannot check when their namespace goes down.
 
----
+**And it fires once.** If it fails at 20:00, that night simply does not happen.
+
+An operator looked like it could collapse all of that into one place -- and building one would show me what the model actually buys, rather than what it is said to buy.
 
 ## 2. What changes inside a controller
 
