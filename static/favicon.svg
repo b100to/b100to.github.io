@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Ops Diary">
+  <!-- Reads at 16px: a prompt chevron and a cursor. Two strokes, nothing else —
+       anything with more detail turns to mush in a browser tab. -->
+  <rect width="64" height="64" rx="14" fill="#1f2933"/>
+  <path d="M18 22l10 10-10 10" fill="none" stroke="#4fd1c5" stroke-width="6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="34" y="38" width="14" height="6" rx="3" fill="#f6ad55"/>
+</svg>
