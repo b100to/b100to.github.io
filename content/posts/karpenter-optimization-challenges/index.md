@@ -194,7 +194,93 @@ spec:
 
 ---
 
-## 5. 최종 권장 설정
+## 5. NodePool 분리로 동시 만료 방지 (Staggered Expiry)
+
+### 문제 상황
+
+`expireAfter`를 설정한 단일 NodePool을 사용하면, 비슷한 시점에 생성된 노드들이 **동시에 만료**됩니다.
+
+```
+09:00 - Node A, B, C 동시 생성
+18:00 - Node A, B, C 동시 만료 → 연쇄 교체 → 서비스 장애!
+```
+
+budgets 설정으로 한 번에 1개씩 교체하더라도, 노드 갱신이 연속으로 이어지면 파드 재배치가 반복되며 서비스에 영향을 줍니다. 실제로 이 문제로 인해 프로덕션 장애를 경험했습니다.
+
+### 해결: NodePool을 base-a / base-b로 분리
+
+NodePool을 두 개로 나누고 만료 시간에 차이를 두어 교대로 갱신되게 합니다.
+
+```yaml
+# base-a
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: base-a
+spec:
+  template:
+    spec:
+      expireAfter: 720h  # 30일
+  disruption:
+    budgets:
+      - nodes: "1"
+---
+# base-b: base-a와 24시간 차이
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: base-b
+spec:
+  template:
+    spec:
+      expireAfter: 744h  # 31일
+  disruption:
+    budgets:
+      - nodes: "1"
+```
+
+- base-a 노드 교체 구간에는 base-b 노드가 안정 상태 유지
+- 교대 갱신으로 항상 절반은 서비스 가능 상태 보장
+
+---
+
+## 6. 파드 분산 보장 — minDomains로 단일 노드 집중 방지
+
+### 문제 상황
+
+노드 장애 후 새 노드가 생성되면 **재스케줄링된 파드들이 한 노드에 몰리는 경우**가 있습니다.
+
+```
+노드 B 장애 → 파드가 노드 A로 몰림
+새 노드 C 생성 → 그런데 파드는 여전히 A에만 집중
+→ 노드 A 하나만 죽어도 전체 서비스 장애
+```
+
+`TopologySpreadConstraints`만으로는 이 상황을 막기 어렵습니다. 노드가 1개만 있는 상태에서는 maxSkew 조건이 이미 충족되기 때문입니다.
+
+### 해결: minDomains 설정
+
+`minDomains`는 분산이 보장되어야 하는 **최소 도메인(노드) 수**를 명시합니다. 이 수를 충족하지 못하면 파드 스케줄링을 보류시켜 Karpenter가 추가 노드를 프로비저닝하도록 유도합니다.
+
+```yaml
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    minDomains: 2  # 반드시 2개 이상의 노드에 분산
+    labelSelector:
+      matchLabels:
+        app: my-app
+```
+
+- 활성 노드가 2개 미만이면 파드 스케줄링 보류 → Karpenter가 노드 추가 프로비저닝
+- 노드가 2개 이상 확보된 후에야 파드 배치 → 단일 노드 집중 원천 차단
+
+> **주의**: dev 환경처럼 **단일 노드로만 운영하는 경우**에는 설정하지 않습니다. 노드를 영원히 기다리게 됩니다.
+
+---
+
+## 7. 최종 권장 설정
 
 위 문제들을 모두 고려한 프로덕션 설정:
 
@@ -252,6 +338,8 @@ Karpenter 프로덕션 운영의 핵심:
 | Consolidation | `consolidateAfter: 10m` + `budgets: 1` |
 | Zone 분산 | On-Demand 폴백 추가 |
 | JVM 워크로드 | requests에 스파이크 반영 |
+| 동시 만료 방지 | NodePool base-a/base-b 분리 + 만료 시간 차등 |
+| 파드 집중 방지 | `minDomains: 2` (prod 전용, dev 제외) |
 
 처음부터 완벽한 설정은 없습니다. **모니터링을 통해 지속적으로 조정**하는 것이 핵심입니다.
 

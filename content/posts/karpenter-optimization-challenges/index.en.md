@@ -196,7 +196,93 @@ spec:
 
 ---
 
-## 5. Recommended Production Configuration
+## 5. Preventing Simultaneous Node Expiry with NodePool Splitting (Staggered Expiry)
+
+### The Problem
+
+With a single NodePool and `expireAfter` configured, nodes created around the same time expire **all at once**.
+
+```
+09:00 - Nodes A, B, C created simultaneously
+18:00 - Nodes A, B, C expire simultaneously → cascading replacement → outage!
+```
+
+Even with `budgets: "1"` limiting replacements to one at a time, back-to-back node rollovers keep rescheduling Pods, and the constant disruption adds up. This caused a real production outage before we fixed it.
+
+### Solution: Split into base-a and base-b NodePools
+
+Divide capacity across two NodePools with offset expiry windows so they roll over at different times.
+
+```yaml
+# base-a
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: base-a
+spec:
+  template:
+    spec:
+      expireAfter: 720h  # 30 days
+  disruption:
+    budgets:
+      - nodes: "1"
+---
+# base-b: offset by 24 hours from base-a
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: base-b
+spec:
+  template:
+    spec:
+      expireAfter: 744h  # 31 days
+  disruption:
+    budgets:
+      - nodes: "1"
+```
+
+- While base-a nodes are rolling, base-b nodes stay stable
+- Staggered renewals ensure roughly half your capacity is always healthy
+
+---
+
+## 6. Preventing Pod Pile-Up with minDomains
+
+### The Problem
+
+After a node failure and recovery, **rescheduled Pods tend to pile up on a single node**.
+
+```
+Node B fails → Pods evacuate to Node A
+New Node C is provisioned → but Pods stay piled on A
+→ Node A failure now takes down everything
+```
+
+`TopologySpreadConstraints` alone doesn't prevent this. With only one available node, `maxSkew: 1` is trivially satisfied — the scheduler sees no reason to spread.
+
+### Solution: Set minDomains
+
+`minDomains` tells the scheduler how many topology domains **must exist** for the spread constraint to be enforced. If fewer domains are available, scheduling is held until Karpenter provisions enough nodes.
+
+```yaml
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    minDomains: 2  # require pods to spread across at least 2 nodes
+    labelSelector:
+      matchLabels:
+        app: my-app
+```
+
+- If fewer than 2 nodes are available, Pod scheduling is held → Karpenter provisions another node
+- Pods are only placed once 2 nodes exist → single-node pile-up is blocked at the source
+
+> **Note**: Skip this for **environments running on a single node** (e.g., dev). With `minDomains: 2` and only one node available, Pods will wait indefinitely.
+
+---
+
+## 7. Recommended Production Configuration
 
 A configuration that addresses all the issues above:
 
@@ -254,6 +340,8 @@ Key takeaways for running Karpenter in production:
 | Consolidation | `consolidateAfter: 10m` + `budgets: 1` |
 | Zone spread | Add On-Demand fallback |
 | JVM workloads | Reflect startup spikes in requests |
+| Simultaneous expiry | Split into base-a/base-b NodePools with offset expiry |
+| Pod pile-up | `minDomains: 2` (prod only, skip for single-node dev) |
 
 There is no perfect configuration on day one. The real key is **continuous tuning informed by monitoring**.
 
